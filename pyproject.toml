@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[tool.setuptools]
+package-dir = {"" = "."}
+packages = ["rl_training", "rl_training.assets", "rl_training.tasks"]
+
+[project]
+name = "xh_training"
+version = "1.0.0"
+description = "XH Robot RL Training - Standalone"
+requires-python = ">=3.10"
+
+[tool.isort]
+profile = "black"
+line_length = 120
+sections = ["FUTURE", "STDLIB", "THIRDPARTY", "ISAACLAB", "FIRSTPARTY", "LOCALFOLDER"]
+known_isaaclab = ["isaaclab", "isaaclab_tasks", "isaaclab_rl", "isaaclab_assets", "isaaclab_mimic", "isaacsim"]
+known_firstparty = ["rl_training"]

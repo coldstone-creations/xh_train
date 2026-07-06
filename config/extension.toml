@@ -1,0 +1,4 @@
+[package]
+name = "xh_training"
+version = "1.0.0"
+description = "XH Robot RL Training - Standalone"

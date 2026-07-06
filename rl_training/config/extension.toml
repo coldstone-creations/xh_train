@@ -1,0 +1,28 @@
+[package]
+
+# Semantic Versioning is used: https://semver.org/
+version = "1.0.0"
+
+# Description
+category = "isaaclab"
+readme  = "README.md"
+
+title = "RL Training Repo for DeepRobotics"
+author = "Bo Peng"
+maintainer = "Bo Peng"
+description="RL Training Repo for DeepRobotics, Based on IsaacLab."
+repository = "https://github.com/DeepRoboticsLab/rl_training.git"
+keywords = ["extension", "rl_training", "isaaclab"]
+
+[dependencies]
+"isaaclab" = {}
+"isaaclab_assets" = {}
+"isaaclab_rl" = {}
+"isaaclab_tasks" = {}
+
+[[python.module]]
+name = "rl_training"
+
+[isaaclab_settings]
+# apt_deps = []
+# ros_ws = "path/from/extension_root/to/ros_ws"
