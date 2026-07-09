@@ -18,10 +18,10 @@ from datetime import datetime
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
-CONFIG_PATH = PROJECT_ROOT / "rl_training/tasks/manager_based/locomotion/velocity/config/quadruped/deeprobotics_xh/rough_env_cfg.py"
-AGENT_CONFIG_PATH = PROJECT_ROOT / "rl_training/tasks/manager_based/locomotion/velocity/config/quadruped/deeprobotics_xh/agents/rsl_rl_ppo_cfg.py"
+CONFIG_PATH = PROJECT_ROOT / "rl_training/tasks/manager_based/locomotion/velocity/config/quadruped/xh/rough_env_cfg.py"
+AGENT_CONFIG_PATH = PROJECT_ROOT / "rl_training/tasks/manager_based/locomotion/velocity/config/quadruped/xh/agents/rsl_rl_ppo_cfg.py"
 TRAIN_SCRIPT = PROJECT_ROOT / "scripts/train.py"
-LOG_ROOT = PROJECT_ROOT / "logs/rsl_rl/deeprobotics_xh_rough"
+LOG_ROOT = PROJECT_ROOT / "logs/rsl_rl/xh_rough"
 TUNING_LOG = PROJECT_ROOT / "logs/rsl_rl/tuning_log.json"
 BACKUP_DIR = PROJECT_ROOT / "logs/rsl_rl/backups"
 

@@ -24,9 +24,14 @@ xh_training/
 
 ## Usage
 
+### Install
+```bash
+python -m pip install -e rl_training
+```
+
 ### Train
 ```bash
-python scripts/train.py --task=Rough-Deeprobotics-xh-v0 --num_envs=4096 --headless
+python scripts/train.py --task=Rough-xh-v0 --num_envs=4096 --headless
 ```
 
 ### Auto-tune
@@ -36,12 +41,16 @@ python scripts/tools/auto_tune_xh.py --max_rounds 3 --iter_per_round 2000 --head
 
 ### Play
 ```bash
-python scripts/play.py --task=Rough-Deeprobotics-xh-v0 \
-    --checkpoint logs/rsl_rl/deeprobotics_xh_rough/.../model_N.pt \
+python scripts/play.py --task=Rough-xh-v0 \
+    --checkpoint logs/rsl_rl/xh_rough/.../model_N.pt \
+    --num_envs=1 --keyboard --camera_follow
+
+    python scripts/play.py --task=Rough-xh-v0 \
+    --checkpoint logs/rsl_rl/xh_flat/2026-07-06_23-03-59//model_3000.pt \
     --num_envs=1 --keyboard --camera_follow
     
 
-python scripts/play.py --task=Rough-Deeprobotics-xh-v0 \
+python scripts/play.py --task=Rough-xh-v0 \
     --num_envs=1 --keyboard --camera_follow
 ```
 

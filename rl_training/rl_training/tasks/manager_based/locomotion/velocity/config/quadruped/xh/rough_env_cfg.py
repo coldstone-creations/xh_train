@@ -1,15 +1,12 @@
-# Copyright (c) 2025 Deep Robotics
-# SPDX-License-Identifier: BSD 3-Clause
-
 from isaaclab.utils import configclass
 
 from rl_training.tasks.manager_based.locomotion.velocity.velocity_env_cfg import LocomotionVelocityRoughEnvCfg
 
-from rl_training.assets.xh import DEEPROBOTICS_XH_CFG  # isort: skip
+from rl_training.assets.xh import XH_CFG  # isort: skip
 
 
 @configclass
-class DeeproboticsXhRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
+class XhRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
     base_link_name = "base_link"
     foot_link_name = ".*_foot"
     # fmt: off
@@ -46,7 +43,7 @@ class DeeproboticsXhRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
         super().__post_init__()
 
         # ------------------------------Scene------------------------------
-        self.scene.robot = DEEPROBOTICS_XH_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot")
+        self.scene.robot = XH_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot")
         self.scene.height_scanner.prim_path = "{ENV_REGEX_NS}/Robot/" + self.base_link_name
         self.scene.height_scanner_base.prim_path = "{ENV_REGEX_NS}/Robot/" + self.base_link_name
         self.scene.height_scanner.pattern_cfg.resolution = 0.07
@@ -56,7 +53,7 @@ class DeeproboticsXhRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
         self.observations.policy.height_scan = None  # type: ignore
         self.observations.policy.base_ang_vel.scale = 0.25
         self.observations.policy.joint_pos.scale = 1.0
-        self.observations.policy.joint_vel.scale = 0.05
+        self.observations.policy.joint_vel.scale = 0.2
         self.observations.policy.joint_pos.params["asset_cfg"].joint_names = self.joint_names
         self.observations.policy.joint_vel.params["asset_cfg"].joint_names = self.joint_names
 
@@ -65,7 +62,7 @@ class DeeproboticsXhRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
         self.actions.joint_pos.scale = {
             ".*_hip_joint": 0.125,
             ".*_thigh_joint": 0.25,
-            ".*_calf_joint": 0.5,
+            ".*_calf_joint": 0.25,
         }
         self.actions.joint_pos.clip = {".*": (-100.0, 100.0)}
         self.actions.joint_pos.joint_names = self.joint_names
@@ -76,8 +73,8 @@ class DeeproboticsXhRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
                 "x": (-1.0, 1.0),
                 "y": (-1.0, 1.0),
                 "z": (0.0, 0.0),
-                "roll": (-0.3, 0.3),
-                "pitch": (-0.3, 0.3),
+                "roll": (-0.2, 0.2),
+                "pitch": (-0.2, 0.2),
                 "yaw": (-3.14, 3.14),
             },
             "velocity_range": {
@@ -105,20 +102,20 @@ class DeeproboticsXhRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
         self.scene.terrain.terrain_generator.sub_terrains["pyramid_stairs"].proportion = 0.0
         self.scene.terrain.terrain_generator.sub_terrains["pyramid_stairs_inv"].proportion = 0.0
         # scale down the terrains because the robot is small
-        self.scene.terrain.terrain_generator.sub_terrains["random_rough"].noise_range = (0.01, 0.06)
+        self.scene.terrain.terrain_generator.sub_terrains["random_rough"].noise_range = (0.01, 0.04)
         self.scene.terrain.terrain_generator.sub_terrains["random_rough"].noise_step = 0.01
 
         # ------------------------------Rewards------------------------------
         self.rewards.action_rate_l2.weight = -0.1
 
-        self.rewards.base_height_l2.weight = -30.0
+        self.rewards.base_height_l2.weight = -20.0
         # xh: 实机站立姿态 thigh=-0.6, calf=0.7
         #     USD 重新生成后坐标系统一, 无需偏移
-        self.rewards.base_height_l2.params["target_height"] = 0.20
+        self.rewards.base_height_l2.params["target_height"] = 0.25
         self.rewards.base_height_l2.params["asset_cfg"].body_names = [self.base_link_name]
 
-        self.rewards.feet_air_time_lin_xy.weight = 5.0
-        self.rewards.feet_air_time_lin_xy.params["threshold"] = 0.3
+        self.rewards.feet_air_time_lin_xy.weight = 3.0
+        self.rewards.feet_air_time_lin_xy.params["threshold"] = 0.2
         self.rewards.feet_air_time_lin_xy.params["sensor_cfg"].body_names = [self.foot_link_name]
         self.rewards.feet_air_time_x_neg.weight = 0.0
         self.rewards.feet_air_time_x_neg.params["threshold"] = 0.5
@@ -131,7 +128,7 @@ class DeeproboticsXhRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
         self.rewards.feet_slide.weight = -0.05
         self.rewards.feet_slide.params["sensor_cfg"].body_names = [self.foot_link_name]
         self.rewards.feet_slide.params["asset_cfg"].body_names = [self.foot_link_name]
-        self.rewards.foot_impact_velocity.weight = -2.0
+        self.rewards.foot_impact_velocity.weight = -1.0
         self.rewards.foot_impact_velocity.params["sensor_cfg"].body_names = [self.foot_link_name]
         self.rewards.foot_impact_velocity.params["asset_cfg"].body_names = [self.foot_link_name]
         # default_joint_pos 来自 init_state (xh.py), 已设为实机站立姿态:
@@ -140,7 +137,7 @@ class DeeproboticsXhRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
         self.rewards.stand_still.weight = -5.0
         self.rewards.stand_still.params["asset_cfg"].joint_names = self.joint_names
         self.rewards.stand_still.params["command_threshold"] = 0.1
-        self.rewards.stand_still_vel_penalty.weight = -10.0
+        self.rewards.stand_still_vel_penalty.weight = -5.0
         self.rewards.stand_still_vel_penalty.params["command_threshold"] = 0.1
         self.rewards.feet_height_body.weight = -0.0
         self.rewards.feet_height_body.params["target_height"] = -0.25
@@ -158,7 +155,7 @@ class DeeproboticsXhRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
         self.rewards.track_ang_vel_z_exp.weight = 6.0
         self.rewards.track_ang_vel_z_exp.params["std"] = 0.5
 
-        self.rewards.undesired_contacts.weight = -2
+        self.rewards.undesired_contacts.weight = -5.0
         self.rewards.undesired_contacts.params["sensor_cfg"].body_names = [f"^(?!.*{self.foot_link_name}).*"]
 
         self.rewards.joint_torques_l2.weight = -2.5e-4
@@ -166,7 +163,7 @@ class DeeproboticsXhRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
         self.rewards.joint_deviation_l1.weight = -0.0
         self.rewards.joint_deviation_l1.params["asset_cfg"].joint_names = [".*_hip_joint"]
         self.rewards.joint_power.weight = -8e-4
-        self.rewards.flat_orientation_l2.weight = -20.0
+        self.rewards.flat_orientation_l2.weight = -10.0
 
         # add the following rewards to improve the gait
         self.rewards.feet_gait.weight = 1.0
@@ -183,20 +180,20 @@ class DeeproboticsXhRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
             ["FR_(hip|thigh|calf).*", "RL_(hip|thigh|calf).*"],
         ]
 
-        self.rewards.joint_pos_limits.weight = -5.0
+        self.rewards.joint_pos_limits.weight = -2.0
         self.rewards.feet_contact_without_cmd.weight = 3.0
         self.rewards.feet_contact_without_cmd.params["sensor_cfg"].body_names = [self.foot_link_name]
 
         # added rewards
-        self.rewards.hipx_joint_pos_penalty.weight = -0.4
+        self.rewards.hipx_joint_pos_penalty.weight = -2.0
         self.rewards.hipx_joint_pos_penalty.params["asset_cfg"].joint_names = self.hip_joint_names
-        self.rewards.hipy_joint_pos_penalty.weight = -0.0
+        self.rewards.hipy_joint_pos_penalty.weight = -3.0
         self.rewards.hipy_joint_pos_penalty.params["asset_cfg"].joint_names = self.thigh_joint_names
-        self.rewards.knee_joint_pos_penalty.weight = -1.5
+        self.rewards.knee_joint_pos_penalty.weight = -8.0
         self.rewards.knee_joint_pos_penalty.params["asset_cfg"].joint_names = self.calf_joint_names
 
         # If the weight of rewards is 0, set rewards to None
-        if self.__class__.__name__ == "DeeproboticsXhRoughEnvCfg":
+        if self.__class__.__name__ == "XhRoughEnvCfg":
             self.disable_zero_weight_rewards()
 
         # ------------------------------Terminations------------------------------
@@ -217,6 +214,7 @@ class DeeproboticsXhRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
 
         # ------------------------------Commands------------------------------
         self.commands.base_velocity.debug_vis = False
+        self.commands.base_velocity.rel_standing_envs = 0.05
         self.commands.base_velocity.ranges.lin_vel_x = (-1.0, 1.0)
-        self.commands.base_velocity.ranges.lin_vel_y = (-0.6, 0.6)
-        self.commands.base_velocity.ranges.ang_vel_z = (-0.6, 0.6)
+        self.commands.base_velocity.ranges.lin_vel_y = (-0.4, 0.4)
+        self.commands.base_velocity.ranges.ang_vel_z = (-0.5, 0.5)

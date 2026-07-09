@@ -38,7 +38,7 @@ ROBOTS = {
         "joint_label": {"hip": "HipX", "thigh": "HipY", "calf": "Knee"},
     },
     "lite3": {
-        "task": "Rough-Deeprobotics-Lite3-v0",
+        "task": "Rough-Lite3-v0",
         "joint_regex": {
             "hip": ".*HipX_joint",
             "thigh": ".*HipY_joint",
@@ -60,12 +60,12 @@ task = cfg["task"].replace("Rough", terrain_type)
 import gymnasium as gym
 print(f"\n===== GYM REGISTRY DEBUG =====")
 print(f"Resolved task name: '{task}'")
-xh_envs = [k for k in sorted(gym.registry) if "xh" in k.lower() or "deeprobotics" in k.lower()]
+xh_envs = [k for k in sorted(gym.registry) if "xh" in k.lower()]
 if xh_envs:
     for e in xh_envs:
         print(f"  REGISTERED: {e}")
 else:
-    print("  NO xh/Deeprobotics envs found in registry!")
+    print("  NO xh envs found in registry!")
     print(f"  Sample keys: {list(sorted(gym.registry))[:20]}")
 print(f"===============================\n")
 

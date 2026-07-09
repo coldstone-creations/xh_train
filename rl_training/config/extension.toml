@@ -7,11 +7,11 @@ version = "1.0.0"
 category = "isaaclab"
 readme  = "README.md"
 
-title = "RL Training Repo for DeepRobotics"
+title = "RL Training Repo for XH"
 author = "Bo Peng"
 maintainer = "Bo Peng"
-description="RL Training Repo for DeepRobotics, Based on IsaacLab."
-repository = "https://github.com/DeepRoboticsLab/rl_training.git"
+description="RL Training Repo for XH, Based on IsaacLab."
+repository = "https://github.com/coldstone-creations/xh_train.git"
 keywords = ["extension", "rl_training", "isaaclab"]
 
 [dependencies]

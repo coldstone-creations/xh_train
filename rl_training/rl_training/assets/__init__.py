@@ -1,7 +1,4 @@
-# Copyright (c) 2025 Deep Robotics
-# SPDX-License-Identifier: BSD 3-Clause
-# 
-# # Copyright (c) 2024-2025 Ziqi Fan
+# Copyright (c) 2024-2025 Ziqi Fan
 # SPDX-License-Identifier: Apache-2.0
 
 # Copyright (c) 2022-2025, The Isaac Lab Project Developers.
@@ -33,4 +30,4 @@ __version__ = ISAACLAB_ASSETS_METADATA["package"]["version"]
 
 # Import asset configurations
 # Lite3/M20 not needed for standalone
-from rl_training.assets.xh import DEEPROBOTICS_XH_CFG  # noqa: F401
+from rl_training.assets.xh import XH_CFG  # noqa: F401

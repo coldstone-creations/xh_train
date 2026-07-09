@@ -1,8 +1,8 @@
 Metadata-Version: 2.4
 Name: rl_training
 Version: 1.0.0
-Summary: RL Training Repo for DeepRobotics, Based on IsaacLab.
-Home-page: https://github.com/DeepRoboticsLab/rl_training.git
+Summary: RL Training Repo for XH, Based on IsaacLab.
+Home-page: https://github.com/coldstone-creations/xh_train.git
 Author: Bo Peng
 Maintainer: Bo Peng
 License: Apache License 2.0

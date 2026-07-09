@@ -1,13 +1,10 @@
-# Copyright (c) 2025 Deep Robotics
-# SPDX-License-Identifier: BSD 3-Clause
-
 import isaaclab.sim as sim_utils
 from isaaclab.actuators import DelayedPDActuatorCfg
 from isaaclab.assets.articulation import ArticulationCfg
 
 from rl_training.assets import ISAACLAB_ASSETS_DATA_DIR
 
-DEEPROBOTICS_XH_CFG = ArticulationCfg(
+XH_CFG = ArticulationCfg(
     spawn=sim_utils.UsdFileCfg(
         usd_path=f"{ISAACLAB_ASSETS_DATA_DIR}/xh_usd/xh.usd",
         activate_contact_sensors=True,

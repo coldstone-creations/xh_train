@@ -1,16 +1,13 @@
-# Copyright (c) 2025 Deep Robotics
-# SPDX-License-Identifier: BSD 3-Clause
-
 from isaaclab.utils import configclass
 from isaaclab_rl.rsl_rl import RslRlOnPolicyRunnerCfg, RslRlPpoActorCriticCfg, RslRlPpoAlgorithmCfg
 
 
 @configclass
-class DeeproboticsXhRoughPPORunnerCfg(RslRlOnPolicyRunnerCfg):
+class XhRoughPPORunnerCfg(RslRlOnPolicyRunnerCfg):
     num_steps_per_env = 24
     max_iterations = 10000
     save_interval = 100
-    experiment_name = "deeprobotics_xh_rough"
+    experiment_name = "xh_rough"
     empirical_normalization = False
     clip_actions = 100
     policy = RslRlPpoActorCriticCfg(
@@ -37,9 +34,9 @@ class DeeproboticsXhRoughPPORunnerCfg(RslRlOnPolicyRunnerCfg):
 
 
 @configclass
-class DeeproboticsXhFlatPPORunnerCfg(DeeproboticsXhRoughPPORunnerCfg):
+class XhFlatPPORunnerCfg(XhRoughPPORunnerCfg):
     def __post_init__(self):
         super().__post_init__()
 
         self.max_iterations = 10000
-        self.experiment_name = "deeprobotics_xh_flat"
+        self.experiment_name = "xh_flat"
